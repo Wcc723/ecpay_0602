@@ -56,7 +56,15 @@ router.get('/', function(req, res, next) {
 })
 .post('/return', function(req, res, next) {
   console.log('req.body:', req.body);
-  
+  const {CheckMacValue} = req.body;
+  const data = { ...req.body }; // 原始資料
+  delete data.CheckMacValue;
+  const create = new ecpay_payment(options);
+  const checkValue = create.payment_client.helper.gen_chk_mac_value(data);
+  // 加入 HsahKey / HashIV 的解密資料
+
+  console.log('CheckMacValue', CheckMacValue, checkValue);
+  console.log('CheckMacValue', CheckMacValue === checkValue);
   res.send('1|OK');
 });
 
