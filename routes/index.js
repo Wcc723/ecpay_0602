@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
       TradeDesc: '測試交易描述',
       ItemName: '測試商品等',
       ReturnURL: `${HOST}/return`,
-      // ClientBackURL: 'https://www.google.com',
+      ClientBackURL: `${HOST}/index.html`,
     };
     const create = new ecpay_payment(options);
     const html = create.payment_client.aio_check_out_all(base_param);
@@ -54,5 +54,10 @@ router.get('/', function(req, res, next) {
 
   res.render('checkout', { title: 'Express', html });
 })
+.post('/return', function(req, res, next) {
+  console.log('req.body:', req.body);
+  
+  res.send('1|OK');
+});
 
 module.exports = router;
